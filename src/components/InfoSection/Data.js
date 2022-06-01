@@ -34,9 +34,9 @@ export const homeObjTwo = {
 
 export const homeObjTree = {
   id: "signup",
-  lightBg: false,
-  lightText: true,
-  lightTextDesc: true,
+  lightBg: true,
+  lightText: false,
+  lightTextDesc: false,
   topLine: "Last",
   headLine: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
   description: "Make your today plan",
@@ -44,7 +44,7 @@ export const homeObjTree = {
   imgStart: false,
   img: require("../../images/planimg.jpg"),
   alt: "planimg",
-  dark: true,
-  primary: true,
-  darkText: false,
+  dark: false,
+  primary: false,
+  darkText: true,
 };
