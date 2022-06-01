@@ -33,7 +33,7 @@ export const homeObjTwo = {
 };
 
 export const homeObjTree = {
-  id: "service",
+  id: "signup",
   lightBg: false,
   lightText: true,
   lightTextDesc: true,
