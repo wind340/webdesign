@@ -1,6 +1,10 @@
 import { authService } from "fbase";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import React, { useEffect, useState } from "react";
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import React, { useState } from "react";
 import {
   FormWrap,
   FormContent,
@@ -18,6 +22,7 @@ import {
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [newAccount, setNewAccount] = useState(true);
   const [error, setError] = useState("");
 
   const onChange = event => {
@@ -30,19 +35,30 @@ const SignIn = () => {
       setPassword(value);
     }
   };
-
   const onSubmit = async event => {
     event.preventDefault();
     try {
-      const data = await signInWithEmailAndPassword(
-        authService,
-        email,
-        password
-      );
+      let data;
+      const auth = getAuth();
+      if (newAccount) {
+        const data = await createUserWithEmailAndPassword(
+          authService,
+          email,
+          password
+        );
+      } else {
+        const data = await signInWithEmailAndPassword(
+          authService,
+          email,
+          password
+        );
+      }
+      console.log(data);
     } catch (error) {
       setError(error.message);
     }
   };
+  const toggleAccount = () => setNewAccount(prev => !prev);
 
   return (
     <>
@@ -50,8 +66,9 @@ const SignIn = () => {
         <FormWrap>
           <Icon to="/#">site</Icon>
           <FormContent>
-            <Form action="#">
-              <FormH1> Sign in to your account</FormH1>
+            <Form action="#" onSubmit={onSubmit}>
+              <FormH1>{newAccount ? "가입하기" : "로그인"}</FormH1>
+
               <FormLabel htmlFor="for">Email</FormLabel>
               <FormInput
                 name="email"
@@ -69,12 +86,15 @@ const SignIn = () => {
                 value={password}
                 onChange={onChange}
               />
-              <FormButton type="submit">Continue</FormButton>
-              <FormLink to="/Register">
-                Don't have an Account?
-                <br /> Creact an account here
-              </FormLink>
-              <Text>{error}</Text>
+              <FormInput
+                type="submit"
+                value={newAccount ? "가입하기" : "로그인"}
+              />
+              <FormButton onClick={toggleAccount}>
+                {newAccount ? "로그인하러가기" : "회원가입하러가기"}
+              </FormButton>
+
+              <Text>{error.substring(9)}</Text>
             </Form>
           </FormContent>
         </FormWrap>

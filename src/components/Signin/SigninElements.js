@@ -106,7 +106,8 @@ export const FormLink = styled(Link)`
 `;
 
 export const Text = styled.p`
-  padding: 15px 0;
+  padding: 20px 0 0 0;
   font-size: 12px;
-  color: #fff;
+  color: red;
+  text-align: center;
 `;
